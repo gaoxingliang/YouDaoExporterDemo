@@ -3,6 +3,11 @@ services: active-directory
 platforms: python
 author: navyasric
 ---
+# forked from official https://github.com/Azure-Samples/active-directory-python-flask-graphapi-web-v2
+
+
+1. Now it supports SSL
+
 
 # Sign in Azure AD + MSA Users using Python-Flask Open Source Libraries
 
@@ -17,31 +22,33 @@ This sample demonstrates how to use Azure AD with a 3rd party Python-Flask libra
 1. Install Flask using pip if you don't already have it.  If you do, make sure to update Flask.     
     ```
     sudo pip install Flask
+    sudo pip3 install Flask-OAuthlib
     ```
 
 2. Register your Azure AD v2.0 app.  
     - Navigate to the [App Registration Portal](https://identity.microsoft.com). 
     - Go to the the `My Apps` page, click `Add an App`, and name your app.  
     - Set a platform by clicking `Add Platform`, select `Web`, and add a Redirect URI of ```http://localhost:5000/login/authorized```.
-    - Click "Generate New Password' and record your Consumer Secret.  
+    - Click "Generate New Password' and record your Consumer Secret(Thats' the application id)
 
 3. Clone the code. 
     ```
-    git clone https://github.com/Azure-Samples/active-directory-python-flask-graphapi-web-v2
+    //git clone https://github.com/Azure-Samples/active-directory-python-flask-graphapi-web-v2
+    git clone https://github.com/gaoxingliang/YouDaoExporterDemo.git
     ```
 
 4. In the top of v2flaskapp.py, add your Application/Client ID and Consumer Secret to the app config.
 
 5. Set your flask environment variable and run the sample in the terminal! Navigate to `http://localhost:5000`.
     ```
-    $ export FLASK_APP=v2flaskapp.py && flask run
+    $ python3 v2flaskapp.py
     ```
 
 ## Questions and Issues
 
 Please file any questions or problems with the sample as a github issue.  You can also post on StackOverflow with the tag ```azure-active-directory```.  For oAuth2.0 library issues, please see note above. 
 
-This sample was tested with Python 2.7.10, Flask 0.11.1, and Flask-OAuthlib 0.9.3.
+This sample was tested with Python 2.7.10 & 3.6, Flask 0.11.1, and Flask-OAuthlib 0.9.3.
 
 ## Acknowledgements
 
