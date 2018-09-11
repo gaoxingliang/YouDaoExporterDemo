@@ -5,8 +5,11 @@
     <body>
         <h1>Successfully Logged In! </h1>
         <h3><br><br><br>User's Claims<br><br><br><br>{{ me }}</h3><br><br><br>
-         <form action = "{{url_for('logout')}}" method = "POST">
-            <p><input type="submit" value="Logout" style="width:400px"></p>
+
+        <form action = "{{url_for('listNotebooks')}}" method = "get">
+            <p><input type="submit" value="listNotebooks" style="width:400px"></p>
         </form>
+
+
     </body>
 </html>

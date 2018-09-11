@@ -1,11 +1,10 @@
 from flask import Flask, redirect, url_for, session, request, jsonify, render_template
 from flask_oauthlib.client import OAuth, OAuthException
-
+import requests
 # from flask_sslify import SSLify
 
 from logging import Logger
 import uuid
-
 # disable ssl cert check
 import ssl
 from flask_oauthlib.client import OAuth, prepare_request, http
@@ -44,9 +43,11 @@ oauth = OAuth(app)
 # and don't check it into github!!
 microsoft = oauth.remote_app(
     'microsoft',
-    consumer_key='Your microsoft application id. refer the readme',
-    consumer_secret='Your microsoft applicaiton password. refer the readme',
-    request_token_params={'scope': 'offline_access User.Read'},
+    #consumer_key='Your microsoft application id. refer the readme',
+    #consumer_secret='Your microsoft applicaiton password. refer the readme',
+    consumer_key='9f0dab57-9155-41ff-9caa-1f6f607363eb',
+    consumer_secret='kblRGFEG69%;zcvhMG220$$',
+    request_token_params={'scope': 'offline_access User.Read Notes.Read Notes.Read.All Notes.ReadWrite.CreatedByApp Notes.Create Notes.ReadWrite.All'},
     base_url='https://graph.microsoft.com/v1.0/',
     request_token_url=None,
     access_token_method='POST',
@@ -81,6 +82,27 @@ def logout():
     session.pop('microsoft_token', None)
     session.pop('state', None)
     return redirect(url_for('index'))
+
+@app.route('/listNotebooks', methods=['GET'])
+def listNotebooks():
+    headers = {
+                #'User-Agent' : 'python_tutorial/1.0',
+               'Authorization' : 'Bearer {0}'.format(session['microsoft_token'][0])
+               #'Accept' : 'application/json',
+               #'Content-Type' : 'application/json'
+               }
+
+    request_id = str(uuid.uuid4())
+    instrumentation = {'client-request-id' : request_id,
+                   'return-client-request-id' : 'true'}
+    headers.update(instrumentation)
+
+    url = "https://graph.microsoft.com/v1.0/me/onenote/notebooks"
+    response = requests.get(url=url,headers=headers)
+    print(response)
+    return redirect(url_for('index'))
+
+
 
 
 @app.route('/login/authorized')
